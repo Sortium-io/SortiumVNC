@@ -11,32 +11,27 @@ IOS_3X_SIZES := 60 87 120 180
 ALL_IOS_SIZES := $(IOS_1X_SIZES) $(IOS_2X_SIZES) $(IOS_3X_SIZES)
 
 ALL_ICONS := \
-	$(ALL_IOS_SIZES:%=novnc-ios-%.png) \
-	novnc.ico
+	$(ALL_IOS_SIZES:%=sortium-ios-%.png) \
+	sortium.ico
 
 all: $(ALL_ICONS)
 
 # Our testing shows that the ICO file need to be sorted in largest to
 # smallest to get the apporpriate behviour
 WEB_ICON_SIZES_REVERSE := $(shell echo $(WEB_ICON_SIZES) | tr ' ' '\n' | sort -nr | tr '\n' ' ')
-WEB_BASE_ICONS := $(WEB_ICON_SIZES_REVERSE:%=novnc-%.png)
+WEB_BASE_ICONS := $(WEB_ICON_SIZES_REVERSE:%=sortium-%.png)
 .INTERMEDIATE: $(WEB_BASE_ICONS)
 
-novnc.ico: $(WEB_BASE_ICONS)
-	convert $(WEB_BASE_ICONS) "$@"
-
 # General conversion
-novnc-%.png: novnc-icon.svg
-	convert -depth 8 -background transparent \
-		-size $*x$* "$(lastword $^)" "$@"
+sortium-%.png: sortium-favicon.svg
+	cairosvg -W $* -H $* "$(lastword $^)" -o "$@"
 
 # iOS icons use their own SVG
-novnc-ios-%.png: novnc-ios-icon.svg
-	convert -depth 8 -background transparent \
-		-size $*x$* "$(lastword $^)" "$@"
+sortium-ios-%.png: sortium-favicon.svg
+	cairosvg -W $* -H $* -b white "$(lastword $^)" -o "$@"
 
 # The smallest sizes are generated using a different SVG
-novnc-16.png novnc-24.png novnc-32.png: novnc-icon-sm.svg
+sortium-16.png sortium-24.png sortium-32.png: sortium-favicon.svg
 
 clean:
 	rm -f *.png

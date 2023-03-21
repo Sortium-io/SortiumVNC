@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" class="sortiumVNC_loading">
+<head>
+
+    <!--
+    noVNC example: simple example using default UI
+    Copyright (C) 2019 The noVNC Authors
+    noVNC is licensed under the MPL 2.0 (see LICENSE.txt)
+    This file is licensed under the 2-Clause BSD license (see LICENSE.txt).
+
+    Connect parameters are provided in query string:
+        http://example.com/?host=HOST&port=PORT&encrypt=1
+    or the fragment:
+        http://example.com/#host=HOST&port=PORT&encrypt=1
+    -->
+    <title>SortiumVNC</title>
+
+    <link rel="icon" type="image/x-icon" href="app/images/icons/sortium.ico">
+
+    <!-- Apple iOS Safari settings -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- @2x -->
+    <link rel="apple-touch-icon" sizes="40x40" type="image/png" href="app/images/icons/sortium-ios-40.png">
+    <link rel="apple-touch-icon" sizes="58x58" type="image/png" href="app/images/icons/sortium-ios-58.png">
+    <link rel="apple-touch-icon" sizes="80x80" type="image/png" href="app/images/icons/sortium-ios-80.png">
+    <link rel="apple-touch-icon" sizes="120x120" type="image/png" href="app/images/icons/sortium-ios-120.png">
+    <link rel="apple-touch-icon" sizes="152x152" type="image/png" href="app/images/icons/sortium-ios-152.png">
+    <link rel="apple-touch-icon" sizes="167x167" type="image/png" href="app/images/icons/sortium-ios-167.png">
+    <!-- @3x -->
+    <link rel="apple-touch-icon" sizes="60x60" type="image/png" href="app/images/icons/sortium-ios-60.png">
+    <link rel="apple-touch-icon" sizes="87x87" type="image/png" href="app/images/icons/sortium-ios-87.png">
+    <link rel="apple-touch-icon" sizes="120x120" type="image/png" href="app/images/icons/sortium-ios-120.png">
+    <link rel="apple-touch-icon" sizes="180x180" type="image/png" href="app/images/icons/sortium-ios-180.png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="app/styles/base.css">
+    <link rel="stylesheet" href="app/styles/input.css">
+
+    <!-- Images that will later appear via CSS -->
+    <link rel="preload" as="image" href="app/images/info.svg">
+    <link rel="preload" as="image" href="app/images/error.svg">
+    <link rel="preload" as="image" href="app/images/warning.svg">
+
+    <script type="module" crossorigin="anonymous" src="app/error-handler.js"></script>
+    <script type="module" crossorigin="anonymous" src="app/ui.js"></script>
+</head>
+
+<body>
+
+    <div id="sortiumVNC_fallback_error" class="sortiumVNC_center">
+        <div>
+            <div>sortiumVNC encountered an error:</div>
+            <br>
+            <div id="sortiumVNC_fallback_errormsg"></div>
+        </div>
+    </div>
+
+    <!-- sortiumVNC Control Bar -->
+    <div id="sortiumVNC_control_bar_anchor" class="sortiumVNC_vcenter">
+
+        <div id="sortiumVNC_control_bar">
+            <div id="sortiumVNC_control_bar_handle" title="Hide/Show the control bar"><div></div></div>
+
+            <div class="sortiumVNC_scroll">
+
+            <img class="sortiumVNC_logo" alt="" src="app/images/icons/sortium-icon-platinum.svg">
+
+            <hr>
+
+            <!-- Drag/Pan the viewport -->
+            <input type="image" alt="Drag" src="app/images/drag.svg"
+                id="sortiumVNC_view_drag_button" class="sortiumVNC_button sortiumVNC_hidden"
+                title="Move/Drag Viewport">
+
+            <!--sortiumVNC Touch Device only buttons-->
+            <div id="sortiumVNC_mobile_buttons">
+                <input type="image" alt="Keyboard" src="app/images/keyboard.svg"
+                    id="sortiumVNC_keyboard_button" class="sortiumVNC_button" title="Show Keyboard">
+            </div>
+
+            <!-- Extra manual keys -->
+            <input type="image" alt="Extra keys" src="app/images/toggleextrakeys.svg"
+                id="sortiumVNC_toggle_extra_keys_button" class="sortiumVNC_button"
+                title="Show Extra Keys">
+            <div class="sortiumVNC_vcenter">
+            <div id="sortiumVNC_modifiers" class="sortiumVNC_panel">
+                <input type="image" alt="Ctrl" src="app/images/ctrl.svg"
+                    id="sortiumVNC_toggle_ctrl_button" class="sortiumVNC_button"
+                    title="Toggle Ctrl">
+                <input type="image" alt="Alt" src="app/images/alt.svg"
+                    id="sortiumVNC_toggle_alt_button" class="sortiumVNC_button"
+                    title="Toggle Alt">
+                <input type="image" alt="Windows" src="app/images/windows.svg"
+                    id="sortiumVNC_toggle_windows_button" class="sortiumVNC_button"
+                    title="Toggle Windows">
+                <input type="image" alt="Tab" src="app/images/tab.svg"
+                    id="sortiumVNC_send_tab_button" class="sortiumVNC_button"
+                    title="Send Tab">
+                <input type="image" alt="Esc" src="app/images/esc.svg"
+                    id="sortiumVNC_send_esc_button" class="sortiumVNC_button"
+                    title="Send Escape">
+                <input type="image" alt="Ctrl+Alt+Del" src="app/images/ctrlaltdel.svg"
+                    id="sortiumVNC_send_ctrl_alt_del_button" class="sortiumVNC_button"
+                    title="Send Ctrl-Alt-Del">
+            </div>
+            </div>
+
+            <!-- Shutdown/Reboot -->
+            <input type="image" alt="Shutdown/Reboot" src="app/images/power.svg"
+                id="sortiumVNC_power_button" class="sortiumVNC_button"
+                title="Shutdown/Reboot...">
+            <div class="sortiumVNC_vcenter">
+            <div id="sortiumVNC_power" class="sortiumVNC_panel">
+                <div class="sortiumVNC_heading">
+                    <img alt="" src="app/images/power.svg"> Power
+                </div>
+                <input type="button" id="sortiumVNC_shutdown_button" value="Shutdown">
+                <input type="button" id="sortiumVNC_reboot_button" value="Reboot">
+                <input type="button" id="sortiumVNC_reset_button" value="Reset">
+            </div>
+            </div>
+
+            <!-- Clipboard -->
+            <input type="image" alt="Clipboard" src="app/images/clipboard.svg"
+                id="sortiumVNC_clipboard_button" class="sortiumVNC_button"
+                title="Clipboard">
+            <div class="sortiumVNC_vcenter">
+            <div id="sortiumVNC_clipboard" class="sortiumVNC_panel">
+                <div class="sortiumVNC_heading">
+                    <img alt="" src="app/images/clipboard.svg"> Clipboard
+                </div>
+                <p class="sortiumVNC_subheading">
+                    Edit clipboard content in the textarea below.
+                </p>
+                <textarea id="sortiumVNC_clipboard_text" rows=5></textarea>
+            </div>
+            </div>
+
+            <!-- Toggle fullscreen -->
+            <input type="image" alt="Full Screen" src="app/images/fullscreen.svg"
+                id="sortiumVNC_fullscreen_button" class="sortiumVNC_button sortiumVNC_hidden"
+                title="Full Screen">
+
+            <!-- Settings -->
+            <input type="image" alt="Settings" src="app/images/settings.svg"
+                id="sortiumVNC_settings_button" class="sortiumVNC_button"
+                title="Settings">
+            <div class="sortiumVNC_vcenter">
+            <div id="sortiumVNC_settings" class="sortiumVNC_panel">
+                <div class="sortiumVNC_heading">
+                    <img alt="" src="app/images/settings.svg"> Settings
+                </div>
+                <ul>
+                    <li>
+                        <label><input id="sortiumVNC_setting_shared" type="checkbox"> Shared Mode</label>
+                    </li>
+                    <li>
+                        <label><input id="sortiumVNC_setting_view_only" type="checkbox"> View Only</label>
+                    </li>
+                    <li><hr></li>
+                    <li>
+                        <label><input id="sortiumVNC_setting_view_clip" type="checkbox"> Clip to Window</label>
+                    </li>
+                    <li>
+                        <label for="sortiumVNC_setting_resize">Scaling Mode:</label>
+                        <select id="sortiumVNC_setting_resize" name="vncResize">
+                            <option value="off">None</option>
+                            <option value="scale">Local Scaling</option>
+                            <option value="remote">Remote Resizing</option>
+                        </select>
+                    </li>
+                    <li><hr></li>
+                    <li>
+                        <div class="sortiumVNC_expander">Advanced</div>
+                        <div><ul>
+                            <li>
+                                <label for="sortiumVNC_setting_quality">Quality:</label>
+                                <input id="sortiumVNC_setting_quality" type="range" min="0" max="9" value="6">
+                            </li>
+                            <li>
+                                <label for="sortiumVNC_setting_compression">Compression level:</label>
+                                <input id="sortiumVNC_setting_compression" type="range" min="0" max="9" value="2">
+                            </li>
+                            <li><hr></li>
+                            <li>
+                                <label for="sortiumVNC_setting_repeaterID">Repeater ID:</label>
+                                <input id="sortiumVNC_setting_repeaterID" type="text" value="">
+                            </li>
+                            <li>
+                                <div class="sortiumVNC_expander">WebSocket</div>
+                                <div><ul>
+                                    <li>
+                                        <label><input id="sortiumVNC_setting_encrypt" type="checkbox"> Encrypt</label>
+                                    </li>
+                                    <li>
+                                        <label for="sortiumVNC_setting_host">Host:</label>
+                                        <input id="sortiumVNC_setting_host">
+                                    </li>
+                                    <li>
+                                        <label for="sortiumVNC_setting_port">Port:</label>
+                                        <input id="sortiumVNC_setting_port" type="number">
+                                    </li>
+                                    <li>
+                                        <label for="sortiumVNC_setting_path">Path:</label>
+                                        <input id="sortiumVNC_setting_path" type="text" value="websockify">
+                                    </li>
+                                </ul></div>
+                            </li>
+                            <li><hr></li>
+                            <li>
+                                <label><input id="sortiumVNC_setting_reconnect" type="checkbox"> Automatic Reconnect</label>
+                            </li>
+                            <li>
+                                <label for="sortiumVNC_setting_reconnect_delay">Reconnect Delay (ms):</label>
+                                <input id="sortiumVNC_setting_reconnect_delay" type="number">
+                            </li>
+                            <li><hr></li>
+                            <li>
+                                <label><input id="sortiumVNC_setting_show_dot" type="checkbox"> Show Dot when No Cursor</label>
+                            </li>
+                            <li><hr></li>
+                            <!-- Logging selection dropdown -->
+                            <li>
+                                <label>Logging:
+                                    <select id="sortiumVNC_setting_logging" name="vncLogging">
+                                    </select>
+                                </label>
+                            </li>
+                        </ul></div>
+                    </li>
+                    <li class="sortiumVNC_version_separator"><hr></li>
+                    <li class="sortiumVNC_version_wrapper">
+                        <span>Version:</span>
+                        <span class="sortiumVNC_version"></span>
+                    </li>
+                </ul>
+            </div>
+            </div>
+
+            <!-- Connection Controls -->
+            <input type="image" alt="Disconnect" src="app/images/disconnect.svg"
+                id="sortiumVNC_disconnect_button" class="sortiumVNC_button"
+                title="Disconnect">
+
+            </div>
+        </div>
+
+    </div> <!-- End of sortiumVNC_control_bar -->
+
+    <div id="sortiumVNC_hint_anchor" class="sortiumVNC_vcenter">
+        <div id="sortiumVNC_control_bar_hint">
+        </div>
+    </div>
+
+    <!-- Status Dialog -->
+    <div id="sortiumVNC_status"></div>
+
+    <!-- Connect button -->
+    <div class="sortiumVNC_center">
+        <div id="sortiumVNC_connect_dlg">
+            <img class="sortiumVNC_logo" alt="" src="app/images/logos/Sortium-Logo-Platinum.svg">
+            <div>
+                <button id="sortiumVNC_connect_button">
+                    <img alt="" src="app/images/connect.svg"> Connect
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Server Key Verification Dialog -->
+    <div class="sortiumVNC_center sortiumVNC_connect_layer">
+    <div id="sortiumVNC_verify_server_dlg" class="sortiumVNC_panel"><form>
+        <div class="sortiumVNC_heading">
+            Server identity
+        </div>
+        <div>
+            The server has provided the following identifying information:
+        </div>
+        <div id="sortiumVNC_fingerprint_block">
+            <b>Fingerprint:</b>
+            <span id="sortiumVNC_fingerprint"></span>
+        </div>
+        <div>
+            Please verify that the information is correct and press
+            "Approve". Otherwise press "Reject".
+        </div>
+        <div>
+            <input id="sortiumVNC_approve_server_button" type="submit" value="Approve" class="sortiumVNC_submit">
+            <input id="sortiumVNC_reject_server_button" type="button" value="Reject" class="sortiumVNC_submit">
+        </div>
+    </form></div>
+    </div>
+
+    <!-- Password Dialog -->
+    <div class="sortiumVNC_center sortiumVNC_connect_layer">
+    <div id="sortiumVNC_credentials_dlg" class="sortiumVNC_panel"><form>
+        <div class="sortiumVNC_heading">
+            Credentials
+        </div>
+        <div id="sortiumVNC_username_block">
+            <label for="sortiumVNC_username_input">Username:</label>
+            <input id="sortiumVNC_username_input">
+        </div>
+        <div id="sortiumVNC_password_block">
+            <label for="sortiumVNC_password_input">Password:</label>
+            <input id="sortiumVNC_password_input" type="password">
+        </div>
+        <div>
+            <input id="sortiumVNC_credentials_button" type="submit" value="Send Credentials" class="sortiumVNC_submit">
+        </div>
+    </form></div>
+    </div>
+
+    <!-- Transition Screens -->
+    <div id="sortiumVNC_transition">
+        <div id="sortiumVNC_transition_text"></div>
+        <div>
+        <input type="button" id="sortiumVNC_cancel_reconnect_button" value="Cancel" class="sortiumVNC_submit">
+        </div>
+        <div class="sortiumVNC_spinner"></div>
+    </div>
+
+    <!-- This is where the RFB elements will attach -->
+    <div id="sortiumVNC_container">
+        <!-- Note that Google Chrome on Android doesn't respect any of these,
+             html attributes which attempt to disable text suggestions on the
+             on-screen keyboard. Let's hope Chrome implements the ime-mode
+             style for example -->
+        <textarea id="sortiumVNC_keyboardinput" autocapitalize="off"
+            autocomplete="off" spellcheck="false" tabindex="-1"></textarea>
+    </div>
+
+    <audio id="sortiumVNC_bell">
+        <source src="app/sounds/bell.oga" type="audio/ogg">
+        <source src="app/sounds/bell.mp3" type="audio/mpeg">
+    </audio>
+ </body>
+</html>

@@ -9,7 +9,7 @@
 // Fallback for all uncought errors
 function handleError(event, err) {
     try {
-        const msg = document.getElementById('noVNC_fallback_errormsg');
+        const msg = document.getElementById('sortiumVNC_fallback_errormsg');
 
         // Work around Firefox bug:
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1685038
@@ -23,13 +23,13 @@ function handleError(event, err) {
         }
 
         let div = document.createElement("div");
-        div.classList.add('noVNC_message');
+        div.classList.add('sortiumVNC_message');
         div.appendChild(document.createTextNode(event.message));
         msg.appendChild(div);
 
         if (event.filename) {
             div = document.createElement("div");
-            div.className = 'noVNC_location';
+            div.className = 'sortiumVNC_location';
             let text = event.filename;
             if (event.lineno !== undefined) {
                 text += ":" + event.lineno;
@@ -43,16 +43,16 @@ function handleError(event, err) {
 
         if (err && err.stack) {
             div = document.createElement("div");
-            div.className = 'noVNC_stack';
+            div.className = 'sortiumVNC_stack';
             div.appendChild(document.createTextNode(err.stack));
             msg.appendChild(div);
         }
 
-        document.getElementById('noVNC_fallback_error')
-            .classList.add("noVNC_open");
+        document.getElementById('sortiumVNC_fallback_error')
+            .classList.add("sortiumVNC_open");
 
     } catch (exc) {
-        document.write("noVNC encountered an error.");
+        document.write("sortiumVNC encountered an error.");
     }
 
     // Try to disable keyboard interaction, best effort

@@ -18,7 +18,7 @@ import Keyboard from "../core/input/keyboard.js";
 import RFB from "../core/rfb.js";
 import * as WebUtil from "./webutil.js";
 
-const PAGE_TITLE = "noVNC";
+const PAGE_TITLE = "sortiumVNC";
 
 const UI = {
 
@@ -78,12 +78,12 @@ const UI = {
                 return response.json();
             })
             .then((packageInfo) => {
-                Array.from(document.getElementsByClassName('noVNC_version')).forEach(el => el.innerText = packageInfo.version);
+                Array.from(document.getElementsByClassName('sortiumVNC_version')).forEach(el => el.innerText = packageInfo.version);
             })
             .catch((err) => {
                 Log.Error("Couldn't fetch package.json: " + err);
-                Array.from(document.getElementsByClassName('noVNC_version_wrapper'))
-                    .concat(Array.from(document.getElementsByClassName('noVNC_version_separator')))
+                Array.from(document.getElementsByClassName('sortiumVNC_version_wrapper'))
+                    .concat(Array.from(document.getElementsByClassName('sortiumVNC_version_separator')))
                     .forEach(el => el.style.display = 'none');
             });
 
@@ -108,7 +108,7 @@ const UI = {
         UI.addConnectionControlHandlers();
         UI.addClipboardHandlers();
         UI.addSettingsHandlers();
-        document.getElementById("noVNC_status")
+        document.getElementById("sortiumVNC_status")
             .addEventListener('click', UI.hideStatus);
 
         // Bootstrap fallback input handler
@@ -118,7 +118,7 @@ const UI = {
 
         UI.updateVisualState('init');
 
-        document.documentElement.classList.remove("noVNC_loading");
+        document.documentElement.classList.remove("sortiumVNC_loading");
 
         let autoconnect = WebUtil.getConfigVar('autoconnect', false);
         if (autoconnect === 'true' || autoconnect == '1') {
@@ -141,8 +141,8 @@ const UI = {
              document.documentElement.mozRequestFullScreen ||
              document.documentElement.webkitRequestFullscreen ||
              document.body.msRequestFullscreen)) {
-            document.getElementById('noVNC_fullscreen_button')
-                .classList.remove("noVNC_hidden");
+            document.getElementById('sortiumVNC_fullscreen_button')
+                .classList.remove("sortiumVNC_hidden");
             UI.addFullscreenHandlers();
         }
     },
@@ -151,7 +151,7 @@ const UI = {
         // Logging selection dropdown
         const llevels = ['error', 'warn', 'info', 'debug'];
         for (let i = 0; i < llevels.length; i += 1) {
-            UI.addOption(document.getElementById('noVNC_setting_logging'), llevels[i], llevels[i]);
+            UI.addOption(document.getElementById('sortiumVNC_setting_logging'), llevels[i], llevels[i]);
         }
 
         // Settings with immediate effects
@@ -215,134 +215,134 @@ const UI = {
 * ------v------*/
 
     addControlbarHandlers() {
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('mousemove', UI.activateControlbar);
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('mouseup', UI.activateControlbar);
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('mousedown', UI.activateControlbar);
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('keydown', UI.activateControlbar);
 
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('mousedown', UI.keepControlbar);
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('keydown', UI.keepControlbar);
 
-        document.getElementById("noVNC_view_drag_button")
+        document.getElementById("sortiumVNC_view_drag_button")
             .addEventListener('click', UI.toggleViewDrag);
 
-        document.getElementById("noVNC_control_bar_handle")
+        document.getElementById("sortiumVNC_control_bar_handle")
             .addEventListener('mousedown', UI.controlbarHandleMouseDown);
-        document.getElementById("noVNC_control_bar_handle")
+        document.getElementById("sortiumVNC_control_bar_handle")
             .addEventListener('mouseup', UI.controlbarHandleMouseUp);
-        document.getElementById("noVNC_control_bar_handle")
+        document.getElementById("sortiumVNC_control_bar_handle")
             .addEventListener('mousemove', UI.dragControlbarHandle);
         // resize events aren't available for elements
         window.addEventListener('resize', UI.updateControlbarHandle);
 
-        const exps = document.getElementsByClassName("noVNC_expander");
+        const exps = document.getElementsByClassName("sortiumVNC_expander");
         for (let i = 0;i < exps.length;i++) {
             exps[i].addEventListener('click', UI.toggleExpander);
         }
     },
 
     addTouchSpecificHandlers() {
-        document.getElementById("noVNC_keyboard_button")
+        document.getElementById("sortiumVNC_keyboard_button")
             .addEventListener('click', UI.toggleVirtualKeyboard);
 
-        UI.touchKeyboard = new Keyboard(document.getElementById('noVNC_keyboardinput'));
+        UI.touchKeyboard = new Keyboard(document.getElementById('sortiumVNC_keyboardinput'));
         UI.touchKeyboard.onkeyevent = UI.keyEvent;
         UI.touchKeyboard.grab();
-        document.getElementById("noVNC_keyboardinput")
+        document.getElementById("sortiumVNC_keyboardinput")
             .addEventListener('input', UI.keyInput);
-        document.getElementById("noVNC_keyboardinput")
+        document.getElementById("sortiumVNC_keyboardinput")
             .addEventListener('focus', UI.onfocusVirtualKeyboard);
-        document.getElementById("noVNC_keyboardinput")
+        document.getElementById("sortiumVNC_keyboardinput")
             .addEventListener('blur', UI.onblurVirtualKeyboard);
-        document.getElementById("noVNC_keyboardinput")
+        document.getElementById("sortiumVNC_keyboardinput")
             .addEventListener('submit', () => false);
 
         document.documentElement
             .addEventListener('mousedown', UI.keepVirtualKeyboard, true);
 
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('touchstart', UI.activateControlbar);
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('touchmove', UI.activateControlbar);
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('touchend', UI.activateControlbar);
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('input', UI.activateControlbar);
 
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('touchstart', UI.keepControlbar);
-        document.getElementById("noVNC_control_bar")
+        document.getElementById("sortiumVNC_control_bar")
             .addEventListener('input', UI.keepControlbar);
 
-        document.getElementById("noVNC_control_bar_handle")
+        document.getElementById("sortiumVNC_control_bar_handle")
             .addEventListener('touchstart', UI.controlbarHandleMouseDown);
-        document.getElementById("noVNC_control_bar_handle")
+        document.getElementById("sortiumVNC_control_bar_handle")
             .addEventListener('touchend', UI.controlbarHandleMouseUp);
-        document.getElementById("noVNC_control_bar_handle")
+        document.getElementById("sortiumVNC_control_bar_handle")
             .addEventListener('touchmove', UI.dragControlbarHandle);
     },
 
     addExtraKeysHandlers() {
-        document.getElementById("noVNC_toggle_extra_keys_button")
+        document.getElementById("sortiumVNC_toggle_extra_keys_button")
             .addEventListener('click', UI.toggleExtraKeys);
-        document.getElementById("noVNC_toggle_ctrl_button")
+        document.getElementById("sortiumVNC_toggle_ctrl_button")
             .addEventListener('click', UI.toggleCtrl);
-        document.getElementById("noVNC_toggle_windows_button")
+        document.getElementById("sortiumVNC_toggle_windows_button")
             .addEventListener('click', UI.toggleWindows);
-        document.getElementById("noVNC_toggle_alt_button")
+        document.getElementById("sortiumVNC_toggle_alt_button")
             .addEventListener('click', UI.toggleAlt);
-        document.getElementById("noVNC_send_tab_button")
+        document.getElementById("sortiumVNC_send_tab_button")
             .addEventListener('click', UI.sendTab);
-        document.getElementById("noVNC_send_esc_button")
+        document.getElementById("sortiumVNC_send_esc_button")
             .addEventListener('click', UI.sendEsc);
-        document.getElementById("noVNC_send_ctrl_alt_del_button")
+        document.getElementById("sortiumVNC_send_ctrl_alt_del_button")
             .addEventListener('click', UI.sendCtrlAltDel);
     },
 
     addMachineHandlers() {
-        document.getElementById("noVNC_shutdown_button")
+        document.getElementById("sortiumVNC_shutdown_button")
             .addEventListener('click', () => UI.rfb.machineShutdown());
-        document.getElementById("noVNC_reboot_button")
+        document.getElementById("sortiumVNC_reboot_button")
             .addEventListener('click', () => UI.rfb.machineReboot());
-        document.getElementById("noVNC_reset_button")
+        document.getElementById("sortiumVNC_reset_button")
             .addEventListener('click', () => UI.rfb.machineReset());
-        document.getElementById("noVNC_power_button")
+        document.getElementById("sortiumVNC_power_button")
             .addEventListener('click', UI.togglePowerPanel);
     },
 
     addConnectionControlHandlers() {
-        document.getElementById("noVNC_disconnect_button")
+        document.getElementById("sortiumVNC_disconnect_button")
             .addEventListener('click', UI.disconnect);
-        document.getElementById("noVNC_connect_button")
+        document.getElementById("sortiumVNC_connect_button")
             .addEventListener('click', UI.connect);
-        document.getElementById("noVNC_cancel_reconnect_button")
+        document.getElementById("sortiumVNC_cancel_reconnect_button")
             .addEventListener('click', UI.cancelReconnect);
 
-        document.getElementById("noVNC_approve_server_button")
+        document.getElementById("sortiumVNC_approve_server_button")
             .addEventListener('click', UI.approveServer);
-        document.getElementById("noVNC_reject_server_button")
+        document.getElementById("sortiumVNC_reject_server_button")
             .addEventListener('click', UI.rejectServer);
-        document.getElementById("noVNC_credentials_button")
+        document.getElementById("sortiumVNC_credentials_button")
             .addEventListener('click', UI.setCredentials);
     },
 
     addClipboardHandlers() {
-        document.getElementById("noVNC_clipboard_button")
+        document.getElementById("sortiumVNC_clipboard_button")
             .addEventListener('click', UI.toggleClipboardPanel);
-        document.getElementById("noVNC_clipboard_text")
+        document.getElementById("sortiumVNC_clipboard_text")
             .addEventListener('change', UI.clipboardSend);
     },
 
     // Add a call to save settings when the element changes,
     // unless the optional parameter changeFunc is used instead.
     addSettingChangeHandler(name, changeFunc) {
-        const settingElem = document.getElementById("noVNC_setting_" + name);
+        const settingElem = document.getElementById("sortiumVNC_setting_" + name);
         if (changeFunc === undefined) {
             changeFunc = () => UI.saveSetting(name);
         }
@@ -350,7 +350,7 @@ const UI = {
     },
 
     addSettingsHandlers() {
-        document.getElementById("noVNC_settings_button")
+        document.getElementById("sortiumVNC_settings_button")
             .addEventListener('click', UI.toggleSettingsPanel);
 
         UI.addSettingChangeHandler('encrypt');
@@ -379,7 +379,7 @@ const UI = {
     },
 
     addFullscreenHandlers() {
-        document.getElementById("noVNC_fullscreen_button")
+        document.getElementById("sortiumVNC_fullscreen_button")
             .addEventListener('click', UI.toggleFullscreen);
 
         window.addEventListener('fullscreenchange', UI.updateFullscreenButton);
@@ -397,31 +397,31 @@ const UI = {
     // Disable/enable controls depending on connection state
     updateVisualState(state) {
 
-        document.documentElement.classList.remove("noVNC_connecting");
-        document.documentElement.classList.remove("noVNC_connected");
-        document.documentElement.classList.remove("noVNC_disconnecting");
-        document.documentElement.classList.remove("noVNC_reconnecting");
+        document.documentElement.classList.remove("sortiumVNC_connecting");
+        document.documentElement.classList.remove("sortiumVNC_connected");
+        document.documentElement.classList.remove("sortiumVNC_disconnecting");
+        document.documentElement.classList.remove("sortiumVNC_reconnecting");
 
-        const transitionElem = document.getElementById("noVNC_transition_text");
+        const transitionElem = document.getElementById("sortiumVNC_transition_text");
         switch (state) {
             case 'init':
                 break;
             case 'connecting':
                 transitionElem.textContent = _("Connecting...");
-                document.documentElement.classList.add("noVNC_connecting");
+                document.documentElement.classList.add("sortiumVNC_connecting");
                 break;
             case 'connected':
-                document.documentElement.classList.add("noVNC_connected");
+                document.documentElement.classList.add("sortiumVNC_connected");
                 break;
             case 'disconnecting':
                 transitionElem.textContent = _("Disconnecting...");
-                document.documentElement.classList.add("noVNC_disconnecting");
+                document.documentElement.classList.add("sortiumVNC_disconnecting");
                 break;
             case 'disconnected':
                 break;
             case 'reconnecting':
                 transitionElem.textContent = _("Reconnecting...");
-                document.documentElement.classList.add("noVNC_reconnecting");
+                document.documentElement.classList.add("sortiumVNC_reconnecting");
                 break;
             default:
                 Log.Error("Invalid visual state: " + state);
@@ -455,14 +455,14 @@ const UI = {
         // State change closes dialogs as they may not be relevant
         // anymore
         UI.closeAllPanels();
-        document.getElementById('noVNC_verify_server_dlg')
-            .classList.remove('noVNC_open');
-        document.getElementById('noVNC_credentials_dlg')
-            .classList.remove('noVNC_open');
+        document.getElementById('sortiumVNC_verify_server_dlg')
+            .classList.remove('sortiumVNC_open');
+        document.getElementById('sortiumVNC_credentials_dlg')
+            .classList.remove('sortiumVNC_open');
     },
 
     showStatus(text, statusType, time) {
-        const statusElem = document.getElementById('noVNC_status');
+        const statusElem = document.getElementById('sortiumVNC_status');
 
         if (typeof statusType === 'undefined') {
             statusType = 'normal';
@@ -470,11 +470,11 @@ const UI = {
 
         // Don't overwrite more severe visible statuses and never
         // errors. Only shows the first error.
-        if (statusElem.classList.contains("noVNC_open")) {
-            if (statusElem.classList.contains("noVNC_status_error")) {
+        if (statusElem.classList.contains("sortiumVNC_open")) {
+            if (statusElem.classList.contains("sortiumVNC_status_error")) {
                 return;
             }
-            if (statusElem.classList.contains("noVNC_status_warn") &&
+            if (statusElem.classList.contains("sortiumVNC_status_warn") &&
                 statusType === 'normal') {
                 return;
             }
@@ -484,27 +484,27 @@ const UI = {
 
         switch (statusType) {
             case 'error':
-                statusElem.classList.remove("noVNC_status_warn");
-                statusElem.classList.remove("noVNC_status_normal");
-                statusElem.classList.add("noVNC_status_error");
+                statusElem.classList.remove("sortiumVNC_status_warn");
+                statusElem.classList.remove("sortiumVNC_status_normal");
+                statusElem.classList.add("sortiumVNC_status_error");
                 break;
             case 'warning':
             case 'warn':
-                statusElem.classList.remove("noVNC_status_error");
-                statusElem.classList.remove("noVNC_status_normal");
-                statusElem.classList.add("noVNC_status_warn");
+                statusElem.classList.remove("sortiumVNC_status_error");
+                statusElem.classList.remove("sortiumVNC_status_normal");
+                statusElem.classList.add("sortiumVNC_status_warn");
                 break;
             case 'normal':
             case 'info':
             default:
-                statusElem.classList.remove("noVNC_status_error");
-                statusElem.classList.remove("noVNC_status_warn");
-                statusElem.classList.add("noVNC_status_normal");
+                statusElem.classList.remove("sortiumVNC_status_error");
+                statusElem.classList.remove("sortiumVNC_status_warn");
+                statusElem.classList.add("sortiumVNC_status_normal");
                 break;
         }
 
         statusElem.textContent = text;
-        statusElem.classList.add("noVNC_open");
+        statusElem.classList.add("sortiumVNC_open");
 
         // If no time was specified, show the status for 1.5 seconds
         if (typeof time === 'undefined') {
@@ -519,28 +519,28 @@ const UI = {
 
     hideStatus() {
         clearTimeout(UI.statusTimeout);
-        document.getElementById('noVNC_status').classList.remove("noVNC_open");
+        document.getElementById('sortiumVNC_status').classList.remove("sortiumVNC_open");
     },
 
     activateControlbar(event) {
         clearTimeout(UI.idleControlbarTimeout);
         // We manipulate the anchor instead of the actual control
         // bar in order to avoid creating new a stacking group
-        document.getElementById('noVNC_control_bar_anchor')
-            .classList.remove("noVNC_idle");
+        document.getElementById('sortiumVNC_control_bar_anchor')
+            .classList.remove("sortiumVNC_idle");
         UI.idleControlbarTimeout = window.setTimeout(UI.idleControlbar, 2000);
     },
 
     idleControlbar() {
         // Don't fade if a child of the control bar has focus
-        if (document.getElementById('noVNC_control_bar')
+        if (document.getElementById('sortiumVNC_control_bar')
             .contains(document.activeElement) && document.hasFocus()) {
             UI.activateControlbar();
             return;
         }
 
-        document.getElementById('noVNC_control_bar_anchor')
-            .classList.add("noVNC_idle");
+        document.getElementById('sortiumVNC_control_bar_anchor')
+            .classList.add("sortiumVNC_idle");
     },
 
     keepControlbar() {
@@ -548,20 +548,20 @@ const UI = {
     },
 
     openControlbar() {
-        document.getElementById('noVNC_control_bar')
-            .classList.add("noVNC_open");
+        document.getElementById('sortiumVNC_control_bar')
+            .classList.add("sortiumVNC_open");
     },
 
     closeControlbar() {
         UI.closeAllPanels();
-        document.getElementById('noVNC_control_bar')
-            .classList.remove("noVNC_open");
+        document.getElementById('sortiumVNC_control_bar')
+            .classList.remove("sortiumVNC_open");
         UI.rfb.focus();
     },
 
     toggleControlbar() {
-        if (document.getElementById('noVNC_control_bar')
-            .classList.contains("noVNC_open")) {
+        if (document.getElementById('sortiumVNC_control_bar')
+            .classList.contains("sortiumVNC_open")) {
             UI.closeControlbar();
         } else {
             UI.openControlbar();
@@ -571,20 +571,20 @@ const UI = {
     toggleControlbarSide() {
         // Temporarily disable animation, if bar is displayed, to avoid weird
         // movement. The transitionend-event will not fire when display=none.
-        const bar = document.getElementById('noVNC_control_bar');
+        const bar = document.getElementById('sortiumVNC_control_bar');
         const barDisplayStyle = window.getComputedStyle(bar).display;
         if (barDisplayStyle !== 'none') {
             bar.style.transitionDuration = '0s';
             bar.addEventListener('transitionend', () => bar.style.transitionDuration = '');
         }
 
-        const anchor = document.getElementById('noVNC_control_bar_anchor');
-        if (anchor.classList.contains("noVNC_right")) {
+        const anchor = document.getElementById('sortiumVNC_control_bar_anchor');
+        if (anchor.classList.contains("sortiumVNC_right")) {
             WebUtil.writeSetting('controlbar_pos', 'left');
-            anchor.classList.remove("noVNC_right");
+            anchor.classList.remove("sortiumVNC_right");
         } else {
             WebUtil.writeSetting('controlbar_pos', 'right');
-            anchor.classList.add("noVNC_right");
+            anchor.classList.add("sortiumVNC_right");
         }
 
         // Consider this a movement of the handle
@@ -595,18 +595,18 @@ const UI = {
     },
 
     showControlbarHint(show, animate=true) {
-        const hint = document.getElementById('noVNC_control_bar_hint');
+        const hint = document.getElementById('sortiumVNC_control_bar_hint');
 
         if (animate) {
-            hint.classList.remove("noVNC_notransition");
+            hint.classList.remove("sortiumVNC_notransition");
         } else {
-            hint.classList.add("noVNC_notransition");
+            hint.classList.add("sortiumVNC_notransition");
         }
 
         if (show) {
-            hint.classList.add("noVNC_active");
+            hint.classList.add("sortiumVNC_active");
         } else {
-            hint.classList.remove("noVNC_active");
+            hint.classList.remove("sortiumVNC_active");
         }
     },
 
@@ -615,13 +615,13 @@ const UI = {
 
         const ptr = getPointerEvent(e);
 
-        const anchor = document.getElementById('noVNC_control_bar_anchor');
+        const anchor = document.getElementById('sortiumVNC_control_bar_anchor');
         if (ptr.clientX < (window.innerWidth * 0.1)) {
-            if (anchor.classList.contains("noVNC_right")) {
+            if (anchor.classList.contains("sortiumVNC_right")) {
                 UI.toggleControlbarSide();
             }
         } else if (ptr.clientX > (window.innerWidth * 0.9)) {
-            if (!anchor.classList.contains("noVNC_right")) {
+            if (!anchor.classList.contains("sortiumVNC_right")) {
                 UI.toggleControlbarSide();
             }
         }
@@ -646,9 +646,9 @@ const UI = {
 
     // Move the handle but don't allow any position outside the bounds
     moveControlbarHandle(viewportRelativeY) {
-        const handle = document.getElementById("noVNC_control_bar_handle");
+        const handle = document.getElementById("sortiumVNC_control_bar_handle");
         const handleHeight = handle.getBoundingClientRect().height;
-        const controlbarBounds = document.getElementById("noVNC_control_bar")
+        const controlbarBounds = document.getElementById("sortiumVNC_control_bar")
             .getBoundingClientRect();
         const margin = 10;
 
@@ -685,7 +685,7 @@ const UI = {
     updateControlbarHandle() {
         // Since the control bar is fixed on the viewport and not the page,
         // the move function expects coordinates relative the the viewport.
-        const handle = document.getElementById("noVNC_control_bar_handle");
+        const handle = document.getElementById("sortiumVNC_control_bar_handle");
         const handleBounds = handle.getBoundingClientRect();
         UI.moveControlbarHandle(handleBounds.top);
     },
@@ -710,7 +710,7 @@ const UI = {
 
         const ptr = getPointerEvent(e);
 
-        const handle = document.getElementById("noVNC_control_bar_handle");
+        const handle = document.getElementById("sortiumVNC_control_bar_handle");
         const bounds = handle.getBoundingClientRect();
 
         // Touch events have implicit capture
@@ -732,10 +732,10 @@ const UI = {
     },
 
     toggleExpander(e) {
-        if (this.classList.contains("noVNC_open")) {
-            this.classList.remove("noVNC_open");
+        if (this.classList.contains("sortiumVNC_open")) {
+            this.classList.remove("sortiumVNC_open");
         } else {
-            this.classList.add("noVNC_open");
+            this.classList.add("sortiumVNC_open");
         }
     },
 
@@ -771,7 +771,7 @@ const UI = {
         // Update the settings control
         let value = UI.getSetting(name);
 
-        const ctrl = document.getElementById('noVNC_setting_' + name);
+        const ctrl = document.getElementById('sortiumVNC_setting_' + name);
         if (ctrl.type === 'checkbox') {
             ctrl.checked = value;
 
@@ -789,7 +789,7 @@ const UI = {
 
     // Save control setting to cookie
     saveSetting(name) {
-        const ctrl = document.getElementById('noVNC_setting_' + name);
+        const ctrl = document.getElementById('sortiumVNC_setting_' + name);
         let val;
         if (ctrl.type === 'checkbox') {
             val = ctrl.checked;
@@ -805,7 +805,7 @@ const UI = {
 
     // Read form control compatible setting from cookie
     getSetting(name) {
-        const ctrl = document.getElementById('noVNC_setting_' + name);
+        const ctrl = document.getElementById('sortiumVNC_setting_' + name);
         let val = WebUtil.readSetting(name);
         if (typeof val !== 'undefined' && val !== null && ctrl.type === 'checkbox') {
             if (val.toString().toLowerCase() in {'0': 1, 'no': 1, 'false': 1}) {
@@ -821,15 +821,15 @@ const UI = {
     // previous-sibling-selectors in CSS which are needed when we want to
     // disable the labels that belong to disabled input elements.
     disableSetting(name) {
-        const ctrl = document.getElementById('noVNC_setting_' + name);
+        const ctrl = document.getElementById('sortiumVNC_setting_' + name);
         ctrl.disabled = true;
-        ctrl.label.classList.add('noVNC_disabled');
+        ctrl.label.classList.add('sortiumVNC_disabled');
     },
 
     enableSetting(name) {
-        const ctrl = document.getElementById('noVNC_setting_' + name);
+        const ctrl = document.getElementById('sortiumVNC_setting_' + name);
         ctrl.disabled = false;
-        ctrl.label.classList.remove('noVNC_disabled');
+        ctrl.label.classList.remove('sortiumVNC_disabled');
     },
 
 /* ------^-------
@@ -869,22 +869,22 @@ const UI = {
         UI.updateSetting('reconnect');
         UI.updateSetting('reconnect_delay');
 
-        document.getElementById('noVNC_settings')
-            .classList.add("noVNC_open");
-        document.getElementById('noVNC_settings_button')
-            .classList.add("noVNC_selected");
+        document.getElementById('sortiumVNC_settings')
+            .classList.add("sortiumVNC_open");
+        document.getElementById('sortiumVNC_settings_button')
+            .classList.add("sortiumVNC_selected");
     },
 
     closeSettingsPanel() {
-        document.getElementById('noVNC_settings')
-            .classList.remove("noVNC_open");
-        document.getElementById('noVNC_settings_button')
-            .classList.remove("noVNC_selected");
+        document.getElementById('sortiumVNC_settings')
+            .classList.remove("sortiumVNC_open");
+        document.getElementById('sortiumVNC_settings_button')
+            .classList.remove("sortiumVNC_selected");
     },
 
     toggleSettingsPanel() {
-        if (document.getElementById('noVNC_settings')
-            .classList.contains("noVNC_open")) {
+        if (document.getElementById('sortiumVNC_settings')
+            .classList.contains("sortiumVNC_open")) {
             UI.closeSettingsPanel();
         } else {
             UI.openSettingsPanel();
@@ -901,22 +901,22 @@ const UI = {
         UI.closeAllPanels();
         UI.openControlbar();
 
-        document.getElementById('noVNC_power')
-            .classList.add("noVNC_open");
-        document.getElementById('noVNC_power_button')
-            .classList.add("noVNC_selected");
+        document.getElementById('sortiumVNC_power')
+            .classList.add("sortiumVNC_open");
+        document.getElementById('sortiumVNC_power_button')
+            .classList.add("sortiumVNC_selected");
     },
 
     closePowerPanel() {
-        document.getElementById('noVNC_power')
-            .classList.remove("noVNC_open");
-        document.getElementById('noVNC_power_button')
-            .classList.remove("noVNC_selected");
+        document.getElementById('sortiumVNC_power')
+            .classList.remove("sortiumVNC_open");
+        document.getElementById('sortiumVNC_power_button')
+            .classList.remove("sortiumVNC_selected");
     },
 
     togglePowerPanel() {
-        if (document.getElementById('noVNC_power')
-            .classList.contains("noVNC_open")) {
+        if (document.getElementById('sortiumVNC_power')
+            .classList.contains("sortiumVNC_open")) {
             UI.closePowerPanel();
         } else {
             UI.openPowerPanel();
@@ -928,11 +928,11 @@ const UI = {
         if (UI.connected &&
             UI.rfb.capabilities.power &&
             !UI.rfb.viewOnly) {
-            document.getElementById('noVNC_power_button')
-                .classList.remove("noVNC_hidden");
+            document.getElementById('sortiumVNC_power_button')
+                .classList.remove("sortiumVNC_hidden");
         } else {
-            document.getElementById('noVNC_power_button')
-                .classList.add("noVNC_hidden");
+            document.getElementById('sortiumVNC_power_button')
+                .classList.add("sortiumVNC_hidden");
             // Close power panel if open
             UI.closePowerPanel();
         }
@@ -948,22 +948,22 @@ const UI = {
         UI.closeAllPanels();
         UI.openControlbar();
 
-        document.getElementById('noVNC_clipboard')
-            .classList.add("noVNC_open");
-        document.getElementById('noVNC_clipboard_button')
-            .classList.add("noVNC_selected");
+        document.getElementById('sortiumVNC_clipboard')
+            .classList.add("sortiumVNC_open");
+        document.getElementById('sortiumVNC_clipboard_button')
+            .classList.add("sortiumVNC_selected");
     },
 
     closeClipboardPanel() {
-        document.getElementById('noVNC_clipboard')
-            .classList.remove("noVNC_open");
-        document.getElementById('noVNC_clipboard_button')
-            .classList.remove("noVNC_selected");
+        document.getElementById('sortiumVNC_clipboard')
+            .classList.remove("sortiumVNC_open");
+        document.getElementById('sortiumVNC_clipboard_button')
+            .classList.remove("sortiumVNC_selected");
     },
 
     toggleClipboardPanel() {
-        if (document.getElementById('noVNC_clipboard')
-            .classList.contains("noVNC_open")) {
+        if (document.getElementById('sortiumVNC_clipboard')
+            .classList.contains("sortiumVNC_open")) {
             UI.closeClipboardPanel();
         } else {
             UI.openClipboardPanel();
@@ -972,12 +972,12 @@ const UI = {
 
     clipboardReceive(e) {
         Log.Debug(">> UI.clipboardReceive: " + e.detail.text.substr(0, 40) + "...");
-        document.getElementById('noVNC_clipboard_text').value = e.detail.text;
+        document.getElementById('sortiumVNC_clipboard_text').value = e.detail.text;
         Log.Debug("<< UI.clipboardReceive");
     },
 
     clipboardSend() {
-        const text = document.getElementById('noVNC_clipboard_text').value;
+        const text = document.getElementById('sortiumVNC_clipboard_text').value;
         Log.Debug(">> UI.clipboardSend: " + text.substr(0, 40) + "...");
         UI.rfb.clipboardPasteFrom(text);
         Log.Debug("<< UI.clipboardSend");
@@ -990,13 +990,13 @@ const UI = {
  * ------v------*/
 
     openConnectPanel() {
-        document.getElementById('noVNC_connect_dlg')
-            .classList.add("noVNC_open");
+        document.getElementById('sortiumVNC_connect_dlg')
+            .classList.add("sortiumVNC_open");
     },
 
     closeConnectPanel() {
-        document.getElementById('noVNC_connect_dlg')
-            .classList.remove("noVNC_open");
+        document.getElementById('sortiumVNC_connect_dlg')
+            .classList.remove("sortiumVNC_open");
     },
 
     connect(event, password) {
@@ -1041,7 +1041,7 @@ const UI = {
         }
         url += '/' + path;
 
-        UI.rfb = new RFB(document.getElementById('noVNC_container'), url,
+        UI.rfb = new RFB(document.getElementById('sortiumVNC_container'), url,
                          { shared: UI.getSetting('shared'),
                            repeaterID: UI.getSetting('repeaterID'),
                            credentials: { password: password } });
@@ -1184,20 +1184,20 @@ const UI = {
             // The same fingerprint format as RealVNC
             fingerprint = Array.from(new Uint8Array(fingerprint).slice(0, 8)).map(
                 x => x.toString(16).padStart(2, '0')).join('-');
-            document.getElementById('noVNC_verify_server_dlg').classList.add('noVNC_open');
-            document.getElementById('noVNC_fingerprint').innerHTML = fingerprint;
+            document.getElementById('sortiumVNC_verify_server_dlg').classList.add('sortiumVNC_open');
+            document.getElementById('sortiumVNC_fingerprint').innerHTML = fingerprint;
         }
     },
 
     approveServer(e) {
         e.preventDefault();
-        document.getElementById('noVNC_verify_server_dlg').classList.remove('noVNC_open');
+        document.getElementById('sortiumVNC_verify_server_dlg').classList.remove('sortiumVNC_open');
         UI.rfb.approveServer();
     },
 
     rejectServer(e) {
         e.preventDefault();
-        document.getElementById('noVNC_verify_server_dlg').classList.remove('noVNC_open');
+        document.getElementById('sortiumVNC_verify_server_dlg').classList.remove('sortiumVNC_open');
         UI.disconnect();
     },
 
@@ -1210,22 +1210,22 @@ const UI = {
     credentials(e) {
         // FIXME: handle more types
 
-        document.getElementById("noVNC_username_block").classList.remove("noVNC_hidden");
-        document.getElementById("noVNC_password_block").classList.remove("noVNC_hidden");
+        document.getElementById("sortiumVNC_username_block").classList.remove("sortiumVNC_hidden");
+        document.getElementById("sortiumVNC_password_block").classList.remove("sortiumVNC_hidden");
 
         let inputFocus = "none";
         if (e.detail.types.indexOf("username") === -1) {
-            document.getElementById("noVNC_username_block").classList.add("noVNC_hidden");
+            document.getElementById("sortiumVNC_username_block").classList.add("sortiumVNC_hidden");
         } else {
-            inputFocus = inputFocus === "none" ? "noVNC_username_input" : inputFocus;
+            inputFocus = inputFocus === "none" ? "sortiumVNC_username_input" : inputFocus;
         }
         if (e.detail.types.indexOf("password") === -1) {
-            document.getElementById("noVNC_password_block").classList.add("noVNC_hidden");
+            document.getElementById("sortiumVNC_password_block").classList.add("sortiumVNC_hidden");
         } else {
-            inputFocus = inputFocus === "none" ? "noVNC_password_input" : inputFocus;
+            inputFocus = inputFocus === "none" ? "sortiumVNC_password_input" : inputFocus;
         }
-        document.getElementById('noVNC_credentials_dlg')
-            .classList.add('noVNC_open');
+        document.getElementById('sortiumVNC_credentials_dlg')
+            .classList.add('sortiumVNC_open');
 
         setTimeout(() => document
             .getElementById(inputFocus).focus(), 100);
@@ -1238,18 +1238,18 @@ const UI = {
         // Prevent actually submitting the form
         e.preventDefault();
 
-        let inputElemUsername = document.getElementById('noVNC_username_input');
+        let inputElemUsername = document.getElementById('sortiumVNC_username_input');
         const username = inputElemUsername.value;
 
-        let inputElemPassword = document.getElementById('noVNC_password_input');
+        let inputElemPassword = document.getElementById('sortiumVNC_password_input');
         const password = inputElemPassword.value;
         // Clear the input after reading the password
         inputElemPassword.value = "";
 
         UI.rfb.sendCredentials({ username: username, password: password });
         UI.reconnectPassword = password;
-        document.getElementById('noVNC_credentials_dlg')
-            .classList.remove('noVNC_open');
+        document.getElementById('sortiumVNC_credentials_dlg')
+            .classList.remove('sortiumVNC_open');
     },
 
 /* ------^-------
@@ -1291,11 +1291,11 @@ const UI = {
             document.mozFullScreenElement || // currently working methods
             document.webkitFullscreenElement ||
             document.msFullscreenElement ) {
-            document.getElementById('noVNC_fullscreen_button')
-                .classList.add("noVNC_selected");
+            document.getElementById('sortiumVNC_fullscreen_button')
+                .classList.add("sortiumVNC_selected");
         } else {
-            document.getElementById('noVNC_fullscreen_button')
-                .classList.remove("noVNC_selected");
+            document.getElementById('sortiumVNC_fullscreen_button')
+                .classList.remove("sortiumVNC_selected");
         }
     },
 
@@ -1374,7 +1374,7 @@ const UI = {
     updateViewDrag() {
         if (!UI.connected) return;
 
-        const viewDragButton = document.getElementById('noVNC_view_drag_button');
+        const viewDragButton = document.getElementById('sortiumVNC_view_drag_button');
 
         if ((!UI.rfb.clipViewport || !UI.rfb.clippingViewport) &&
             UI.rfb.dragViewport) {
@@ -1384,15 +1384,15 @@ const UI = {
         }
 
         if (UI.rfb.dragViewport) {
-            viewDragButton.classList.add("noVNC_selected");
+            viewDragButton.classList.add("sortiumVNC_selected");
         } else {
-            viewDragButton.classList.remove("noVNC_selected");
+            viewDragButton.classList.remove("sortiumVNC_selected");
         }
 
         if (UI.rfb.clipViewport) {
-            viewDragButton.classList.remove("noVNC_hidden");
+            viewDragButton.classList.remove("sortiumVNC_hidden");
         } else {
-            viewDragButton.classList.add("noVNC_hidden");
+            viewDragButton.classList.add("sortiumVNC_hidden");
         }
 
         viewDragButton.disabled = !UI.rfb.clippingViewport;
@@ -1431,7 +1431,7 @@ const UI = {
     showVirtualKeyboard() {
         if (!isTouchDevice) return;
 
-        const input = document.getElementById('noVNC_keyboardinput');
+        const input = document.getElementById('sortiumVNC_keyboardinput');
 
         if (document.activeElement == input) return;
 
@@ -1449,7 +1449,7 @@ const UI = {
     hideVirtualKeyboard() {
         if (!isTouchDevice) return;
 
-        const input = document.getElementById('noVNC_keyboardinput');
+        const input = document.getElementById('sortiumVNC_keyboardinput');
 
         if (document.activeElement != input) return;
 
@@ -1457,8 +1457,8 @@ const UI = {
     },
 
     toggleVirtualKeyboard() {
-        if (document.getElementById('noVNC_keyboard_button')
-            .classList.contains("noVNC_selected")) {
+        if (document.getElementById('sortiumVNC_keyboard_button')
+            .classList.contains("sortiumVNC_selected")) {
             UI.hideVirtualKeyboard();
         } else {
             UI.showVirtualKeyboard();
@@ -1466,23 +1466,23 @@ const UI = {
     },
 
     onfocusVirtualKeyboard(event) {
-        document.getElementById('noVNC_keyboard_button')
-            .classList.add("noVNC_selected");
+        document.getElementById('sortiumVNC_keyboard_button')
+            .classList.add("sortiumVNC_selected");
         if (UI.rfb) {
             UI.rfb.focusOnClick = false;
         }
     },
 
     onblurVirtualKeyboard(event) {
-        document.getElementById('noVNC_keyboard_button')
-            .classList.remove("noVNC_selected");
+        document.getElementById('sortiumVNC_keyboard_button')
+            .classList.remove("sortiumVNC_selected");
         if (UI.rfb) {
             UI.rfb.focusOnClick = true;
         }
     },
 
     keepVirtualKeyboard(event) {
-        const input = document.getElementById('noVNC_keyboardinput');
+        const input = document.getElementById('sortiumVNC_keyboardinput');
 
         // Only prevent focus change if the virtual keyboard is active
         if (document.activeElement != input) {
@@ -1510,7 +1510,7 @@ const UI = {
     },
 
     keyboardinputReset() {
-        const kbi = document.getElementById('noVNC_keyboardinput');
+        const kbi = document.getElementById('sortiumVNC_keyboardinput');
         kbi.value = new Array(UI.defaultKeyboardinputLen).join("_");
         UI.lastKeyboardinput = kbi.value;
     },
@@ -1596,22 +1596,22 @@ const UI = {
         UI.closeAllPanels();
         UI.openControlbar();
 
-        document.getElementById('noVNC_modifiers')
-            .classList.add("noVNC_open");
-        document.getElementById('noVNC_toggle_extra_keys_button')
-            .classList.add("noVNC_selected");
+        document.getElementById('sortiumVNC_modifiers')
+            .classList.add("sortiumVNC_open");
+        document.getElementById('sortiumVNC_toggle_extra_keys_button')
+            .classList.add("sortiumVNC_selected");
     },
 
     closeExtraKeys() {
-        document.getElementById('noVNC_modifiers')
-            .classList.remove("noVNC_open");
-        document.getElementById('noVNC_toggle_extra_keys_button')
-            .classList.remove("noVNC_selected");
+        document.getElementById('sortiumVNC_modifiers')
+            .classList.remove("sortiumVNC_open");
+        document.getElementById('sortiumVNC_toggle_extra_keys_button')
+            .classList.remove("sortiumVNC_selected");
     },
 
     toggleExtraKeys() {
-        if (document.getElementById('noVNC_modifiers')
-            .classList.contains("noVNC_open")) {
+        if (document.getElementById('sortiumVNC_modifiers')
+            .classList.contains("sortiumVNC_open")) {
             UI.closeExtraKeys();
         } else  {
             UI.openExtraKeys();
@@ -1627,35 +1627,35 @@ const UI = {
     },
 
     toggleCtrl() {
-        const btn = document.getElementById('noVNC_toggle_ctrl_button');
-        if (btn.classList.contains("noVNC_selected")) {
+        const btn = document.getElementById('sortiumVNC_toggle_ctrl_button');
+        if (btn.classList.contains("sortiumVNC_selected")) {
             UI.sendKey(KeyTable.XK_Control_L, "ControlLeft", false);
-            btn.classList.remove("noVNC_selected");
+            btn.classList.remove("sortiumVNC_selected");
         } else {
             UI.sendKey(KeyTable.XK_Control_L, "ControlLeft", true);
-            btn.classList.add("noVNC_selected");
+            btn.classList.add("sortiumVNC_selected");
         }
     },
 
     toggleWindows() {
-        const btn = document.getElementById('noVNC_toggle_windows_button');
-        if (btn.classList.contains("noVNC_selected")) {
+        const btn = document.getElementById('sortiumVNC_toggle_windows_button');
+        if (btn.classList.contains("sortiumVNC_selected")) {
             UI.sendKey(KeyTable.XK_Super_L, "MetaLeft", false);
-            btn.classList.remove("noVNC_selected");
+            btn.classList.remove("sortiumVNC_selected");
         } else {
             UI.sendKey(KeyTable.XK_Super_L, "MetaLeft", true);
-            btn.classList.add("noVNC_selected");
+            btn.classList.add("sortiumVNC_selected");
         }
     },
 
     toggleAlt() {
-        const btn = document.getElementById('noVNC_toggle_alt_button');
-        if (btn.classList.contains("noVNC_selected")) {
+        const btn = document.getElementById('sortiumVNC_toggle_alt_button');
+        if (btn.classList.contains("sortiumVNC_selected")) {
             UI.sendKey(KeyTable.XK_Alt_L, "AltLeft", false);
-            btn.classList.remove("noVNC_selected");
+            btn.classList.remove("sortiumVNC_selected");
         } else {
             UI.sendKey(KeyTable.XK_Alt_L, "AltLeft", true);
-            btn.classList.add("noVNC_selected");
+            btn.classList.add("sortiumVNC_selected");
         }
     },
 
@@ -1675,9 +1675,9 @@ const UI = {
         // if we focus the screen the virtual keyboard would be closed.
         // In this case we focus our special virtual keyboard input
         // element instead.
-        if (document.getElementById('noVNC_keyboard_button')
-            .classList.contains("noVNC_selected")) {
-            document.getElementById('noVNC_keyboardinput').focus();
+        if (document.getElementById('sortiumVNC_keyboard_button')
+            .classList.contains("sortiumVNC_selected")) {
+            document.getElementById('sortiumVNC_keyboardinput').focus();
         } else {
             UI.rfb.focus();
         }
@@ -1698,19 +1698,19 @@ const UI = {
 
         // Hide input related buttons in view only mode
         if (UI.rfb.viewOnly) {
-            document.getElementById('noVNC_keyboard_button')
-                .classList.add('noVNC_hidden');
-            document.getElementById('noVNC_toggle_extra_keys_button')
-                .classList.add('noVNC_hidden');
-            document.getElementById('noVNC_clipboard_button')
-                .classList.add('noVNC_hidden');
+            document.getElementById('sortiumVNC_keyboard_button')
+                .classList.add('sortiumVNC_hidden');
+            document.getElementById('sortiumVNC_toggle_extra_keys_button')
+                .classList.add('sortiumVNC_hidden');
+            document.getElementById('sortiumVNC_clipboard_button')
+                .classList.add('sortiumVNC_hidden');
         } else {
-            document.getElementById('noVNC_keyboard_button')
-                .classList.remove('noVNC_hidden');
-            document.getElementById('noVNC_toggle_extra_keys_button')
-                .classList.remove('noVNC_hidden');
-            document.getElementById('noVNC_clipboard_button')
-                .classList.remove('noVNC_hidden');
+            document.getElementById('sortiumVNC_keyboard_button')
+                .classList.remove('sortiumVNC_hidden');
+            document.getElementById('sortiumVNC_toggle_extra_keys_button')
+                .classList.remove('sortiumVNC_hidden');
+            document.getElementById('sortiumVNC_clipboard_button')
+                .classList.remove('sortiumVNC_hidden');
         }
     },
 
@@ -1731,7 +1731,7 @@ const UI = {
 
     bell(e) {
         if (WebUtil.getConfigVar('bell', 'on') === 'on') {
-            const promise = document.getElementById('noVNC_bell').play();
+            const promise = document.getElementById('sortiumVNC_bell').play();
             // The standards disagree on the return value here
             if (promise) {
                 promise.catch((e) => {
